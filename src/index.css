@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Poppins', sans-serif;
+  }
+  body {
+    @apply bg-slate-100 h-[100dvh]
+  }
+}
+@layer utilities {
+  #root {
+    height: 100%;
+    overflow: auto;
+  }
+  .appContainer {
+    background: url('./assets/bg.jpg') repeat;
+    /* @apply bg-white */
+  }
+  .form-group {
+    @apply relative mb-3;
+  }
+  .form-control {
+    @apply focus:ring-2 focus:ring-amber-500 focus:outline-none appearance-none w-full leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 px-3 ring-1 ring-slate-200 shadow-sm;
+  }
+  .form-label {
+    @apply text-sm leading-6 font-medium text-slate-600 group-focus-within:text-amber-500 mb-1 inline-block;
+  }
+  .btn {
+    @apply bg-amber-500 shadow text-white leading-6 font-medium py-2 px-3 rounded-lg disabled:bg-amber-500/50 disabled:shadow-none;
+  }
+  .hasError {
+    @apply text-rose-600 text-xs leading-4 font-medium py-1;
+  }
+  .actionBtns {
+    @apply flex gap-3 absolute right-0 left-0 w-full  bottom-4 z-20 items-center justify-center
+  }
+  .actionBtns button {
+    @apply w-10 h-10 bg-amber-700 rounded-full text-white flex items-center justify-center text-xl shadow-lg
+  }
+}
