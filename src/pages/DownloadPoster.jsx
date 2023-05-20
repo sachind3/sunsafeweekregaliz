@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context";
 import { useNavigate } from "react-router-dom";
 import TEMP1 from "./../assets/template1.png";
@@ -8,18 +8,26 @@ import TEMP4 from "./../assets/template4.png";
 import TEMP5 from "./../assets/template5.png";
 import TEMP6 from "./../assets/template6.png";
 import TEMP7 from "./../assets/template7.png";
-import { BsFileImage, BsFilePdf, BsArrowClockwise } from "react-icons/bs";
+
+import { BsFileImage, BsArrowClockwise } from "react-icons/bs";
 import html2canvas from "html2canvas";
-import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
+// import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
+// import download from "downloadjs";
 
 export default function DownloadPoster() {
   const navigate = useNavigate();
+  // const [canvasImg, setCanvasImg] = useState(null);
   const { docInfo, setIsLoading } = useContext(AppContext);
   useEffect(() => {
     if (!docInfo) {
       navigate("/");
     }
   }, [docInfo, navigate]);
+
+  let myPdf;
+  if (docInfo) {
+    myPdf = `./assets/1.pdf`;
+  }
 
   const reloadPage = () => {
     window.location.reload();
@@ -54,58 +62,12 @@ export default function DownloadPoster() {
         alert("oops, something went wrong!", error);
       });
   };
-  const getPDF = async () => {
-    // let pdfPhoto = "";
-    // const canvas = document.createElement("canvas");
-    // const ctx = canvas.getContext("2d");
-    // const img = new Image();
-    // img.crossOrigin = "";
-    // img.src = docInfo.photo;
-    // img.onload = () => {
-    //   canvas.width = 512;
-    //   canvas.height = 512;
-    //   if (tempInfo.design === 2) {
-    //     hexshap(ctx, 0, 0, 512, 512, 512 / 2);
-    //   } else {
-    //     roundedImage(ctx, 0, 0, 512, 512, 512 / 2);
-    //   }
-    //   ctx.clip();
-    //   ctx.drawImage(img, 0, 0, 512, 512);
-    //   pdfPhoto = canvas.toDataURL("image/png");
-    // };
-    // const existingPdfBytes = await fetch(myPdf).then((res) =>
-    //   res.arrayBuffer()
-    // );
-    // const pngImageBytes = await fetch(pdfPhoto).then((res) =>
-    //   res.arrayBuffer()
-    // );
-    // const pdfDoc = await PDFDocument.load(existingPdfBytes);
-    // const pngImage = await pdfDoc.embedPng(pngImageBytes);
-    // const helveticaFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-    // const pages = pdfDoc.getPages();
-    // const firstPage = pages[0];
-    // firstPage.drawText(docInfo.fullName, {
-    //   x:
-    //     firstPage.getWidth() / 2 -
-    //     helveticaFont.widthOfTextAtSize(
-    //       docInfo.fullName,
-    //       tempInfo.pdf.name.size
-    //     ) /
-    //       2,
-    //   y: tempInfo.pdf.name.y,
-    //   size: tempInfo.pdf.name.size,
-    //   font: helveticaFont,
-    //   color: tempInfo.design === 2 ? rgb(1, 1, 1) : rgb(0, 0, 0),
-    // });
-    // firstPage.drawImage(pngImage, {
-    //   x: tempInfo.pdf.img.x,
-    //   y: tempInfo.pdf.img.y,
-    //   width: tempInfo.pdf.img.width,
-    //   height: tempInfo.pdf.img.height,
-    // });
-    // const pdfBytes = await pdfDoc.save();
-    // download(pdfBytes, `pdf.pdf`, "application/pdf");
-  };
+  function roundedImage(ctx) {
+    ctx.beginPath();
+    ctx.arc(512 / 2, 512 / 2, 512 / 2, 0, Math.PI * 2, false);
+  }
+
+  // const getPDF = async () => {};
   return (
     <>
       <div className="relative w-full mt-auto mb-auto">
@@ -143,9 +105,9 @@ export default function DownloadPoster() {
         <button onClick={downloadImage}>
           <BsFileImage />
         </button>
-        <button onClick={getPDF}>
+        {/* <button onClick={getPDF}>
           <BsFilePdf />
-        </button>
+        </button> */}
       </div>
     </>
   );

@@ -9,7 +9,7 @@ const DoctorInfo = () => {
   const navigate = useNavigate();
   const validationSchema = Yup.object().shape({
     fullName: Yup.string().required("Doctor name is required"),
-    mobile: Yup.string(),
+    mobile: Yup.number().typeError("Please enter a only digits."),
     photo: Yup.mixed().when({
       is: null,
       then: Yup.mixed().required(),
@@ -30,7 +30,7 @@ const DoctorInfo = () => {
           validationSchema={validationSchema}
           onSubmit={(val) => {
             const data = {
-              fullName: `Dr. ${val.fullName}`,
+              fullName: `${val.fullName}`,
               mobile: val.mobile,
               photo: val.photo,
             };
@@ -54,7 +54,7 @@ const DoctorInfo = () => {
                 onSubmit={handleSubmit}
               >
                 <h4 className="text-theme_purple-500 font-bold text-2xl text-center mb-4">
-                  Doctor Details
+                  Sun Safe Week Regaliz
                 </h4>
                 <div className="mb-4">
                   {values.photo ? (
@@ -103,7 +103,7 @@ const DoctorInfo = () => {
                 </div>
                 <div className="relative form-group">
                   <label htmlFor="fullName" className="form-label">
-                    Doctor Full Name
+                    Full Name
                   </label>
                   <div className="relative">
                     <Field
