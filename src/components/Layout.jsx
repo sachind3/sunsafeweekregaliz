@@ -6,10 +6,9 @@ import LOGO from "./../assets/logo.png";
 const Layout = () => {
   const { isLoading } = useContext(AppContext);
   return (
-    <div className="mx-auto max-w-md h-full flex flex-col appContainer">
-      <div className="bg-white py-2 shadow">
-        <img src={LOGO} alt="logo" className="h-10 mx-auto" />
-      </div>
+    <div className="mx-auto max-w-md h-full flex flex-col appContainer py-2">
+      <img src={LOGO} alt="logo" className="h-20 mx-auto" />
+
       {isLoading && <Loader />}
       <Outlet />
     </div>
