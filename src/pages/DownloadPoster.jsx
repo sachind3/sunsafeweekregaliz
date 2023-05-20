@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../context";
 import { useNavigate } from "react-router-dom";
 import TEMP1 from "./../assets/template1.png";
@@ -9,25 +9,18 @@ import TEMP5 from "./../assets/template5.png";
 import TEMP6 from "./../assets/template6.png";
 import TEMP7 from "./../assets/template7.png";
 
-import { BsFileImage, BsArrowClockwise } from "react-icons/bs";
+import { BsFileImage, BsFilePdf, BsArrowClockwise } from "react-icons/bs";
 import html2canvas from "html2canvas";
-// import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
-// import download from "downloadjs";
+import jsPDF from "jspdf";
 
 export default function DownloadPoster() {
   const navigate = useNavigate();
-  // const [canvasImg, setCanvasImg] = useState(null);
   const { docInfo, setIsLoading } = useContext(AppContext);
   useEffect(() => {
     if (!docInfo) {
       navigate("/");
     }
   }, [docInfo, navigate]);
-
-  let myPdf;
-  if (docInfo) {
-    myPdf = `./assets/1.pdf`;
-  }
 
   const reloadPage = () => {
     window.location.reload();
@@ -48,6 +41,8 @@ export default function DownloadPoster() {
     })
       .then((canvas) => {
         var myImage = canvas.toDataURL("image/jpeg", 1);
+        console.log(myImage);
+        setCanvasImg(myImage);
         const link = document.createElement("a");
         link.href = myImage;
         link.target = "_blank";
@@ -62,12 +57,35 @@ export default function DownloadPoster() {
         alert("oops, something went wrong!", error);
       });
   };
-  function roundedImage(ctx) {
-    ctx.beginPath();
-    ctx.arc(512 / 2, 512 / 2, 512 / 2, 0, Math.PI * 2, false);
-  }
 
-  // const getPDF = async () => {};
+  const getPDF = async () => {
+    setIsLoading(true);
+    window.scrollTo(0, 0);
+    html2canvas(document.getElementById("fullImg"), {
+      allowTaint: true,
+      useCORS: true,
+      logging: true,
+      scrollX: 0,
+      scrollY: -window.scrollY,
+      onrendered: function (canvas) {
+        document.body.appendChild(canvas);
+        window.scrollTo(0, 0);
+      },
+    })
+      .then((canvas) => {
+        const img = canvas.toDataURL("image/jpeg", 1);
+        console.log(img);
+        const pdf = new jsPDF("p", "px", [620, 1104]);
+        pdf.addImage(img, "jpeg", 0, 0, 620, 1104);
+        pdf.save("file.pdf");
+        setIsLoading(false);
+      })
+      .catch(function (error) {
+        console.log(error);
+        setIsLoading(false);
+        alert("oops, something went wrong!", error);
+      });
+  };
   return (
     <>
       <div className="relative w-full mt-auto mb-auto">
@@ -98,6 +116,7 @@ export default function DownloadPoster() {
           </div>
         </div>
       </div>
+
       <div className="actionBtns">
         <button onClick={reloadPage}>
           <BsArrowClockwise />
@@ -105,9 +124,9 @@ export default function DownloadPoster() {
         <button onClick={downloadImage}>
           <BsFileImage />
         </button>
-        {/* <button onClick={getPDF}>
+        <button onClick={getPDF}>
           <BsFilePdf />
-        </button> */}
+        </button>
       </div>
     </>
   );
