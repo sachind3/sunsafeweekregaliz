@@ -41,8 +41,6 @@ export default function DownloadPoster() {
     })
       .then((canvas) => {
         var myImage = canvas.toDataURL("image/jpeg", 1);
-        console.log(myImage);
-        setCanvasImg(myImage);
         const link = document.createElement("a");
         link.href = myImage;
         link.target = "_blank";
