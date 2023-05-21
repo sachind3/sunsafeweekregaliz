@@ -41,4 +41,13 @@
   .actionBtns button {
     @apply w-10 h-10 bg-amber-700 rounded-full text-white flex items-center justify-center text-xl shadow-lg
   }
+  .mySwiper {
+    @apply bg-white
+  }
+  .swiperBtn {
+    @apply bg-amber-500 text-white
+  }
+  .swiperBtn:after {
+    @apply text-base
+  }
 }

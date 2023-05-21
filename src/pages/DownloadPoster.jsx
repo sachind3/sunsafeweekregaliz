@@ -1,13 +1,13 @@
 import { useContext, useEffect } from "react";
 import { AppContext } from "../context";
 import { useNavigate } from "react-router-dom";
-import TEMP1 from "./../assets/template1.png";
-import TEMP2 from "./../assets/template2.png";
-import TEMP3 from "./../assets/template3.png";
-import TEMP4 from "./../assets/template4.png";
-import TEMP5 from "./../assets/template5.png";
-import TEMP6 from "./../assets/template6.png";
-import TEMP7 from "./../assets/template7.png";
+// import TEMP1 from "./../assets/template1.png";
+// import TEMP2 from "./../assets/template2.png";
+// import TEMP3 from "./../assets/template3.png";
+// import TEMP4 from "./../assets/template4.png";
+// import TEMP5 from "./../assets/template5.png";
+// import TEMP6 from "./../assets/template6.png";
+// import TEMP7 from "./../assets/template7.png";
 
 import { BsFileImage, BsFilePdf, BsArrowClockwise } from "react-icons/bs";
 import html2canvas from "html2canvas";
@@ -15,7 +15,7 @@ import jsPDF from "jspdf";
 
 export default function DownloadPoster() {
   const navigate = useNavigate();
-  const { docInfo, setIsLoading } = useContext(AppContext);
+  const { docInfo, setIsLoading, tempInfo } = useContext(AppContext);
   useEffect(() => {
     if (!docInfo) {
       navigate("/");
@@ -72,7 +72,6 @@ export default function DownloadPoster() {
     })
       .then((canvas) => {
         const img = canvas.toDataURL("image/jpeg", 1);
-        console.log(img);
         const pdf = new jsPDF("p", "px", [620, 1104]);
         pdf.addImage(img, "jpeg", 0, 0, 620, 1104);
         pdf.save("file.pdf");
@@ -91,7 +90,8 @@ export default function DownloadPoster() {
           id="fullImg"
           className="fullImg w-[310px] mx-auto bg-white relative"
         >
-          {new Date().getDate() > 17 && new Date().getDate() < 22 && (
+          {tempInfo?.name && <img src={`../template/${tempInfo?.name}.png`} />}
+          {/* {new Date().getDate() > 17 && new Date().getDate() < 22 && (
             <img src={TEMP1} alt="poster" />
           )}
           {new Date().getDate() === 22 && <img src={TEMP2} alt="poster" />}
@@ -99,7 +99,7 @@ export default function DownloadPoster() {
           {new Date().getDate() === 24 && <img src={TEMP4} alt="poster" />}
           {new Date().getDate() === 25 && <img src={TEMP5} alt="poster" />}
           {new Date().getDate() === 26 && <img src={TEMP6} alt="poster" />}
-          {new Date().getDate() === 27 && <img src={TEMP7} alt="poster" />}
+          {new Date().getDate() === 27 && <img src={TEMP7} alt="poster" />} */}
 
           <div className="absolute w-full bottom-16 px-7">
             <div className="w-full relative">

@@ -35,7 +35,7 @@ const DoctorInfo = () => {
               photo: val.photo,
             };
             setDocInfo(data);
-            navigate("/download-poster");
+            navigate("/select-poster");
           }}
         >
           {({
