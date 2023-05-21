@@ -36,6 +36,9 @@ export default function SelectPoster() {
   };
   return (
     <div className="py-3">
+      <h4 className="text-theme_purple-500 font-bold text-2xl text-center mb-4">
+        Select Poster
+      </h4>
       <div className="px-12">
         <Swiper
           pagination={true}

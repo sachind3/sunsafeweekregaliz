@@ -8,17 +8,14 @@
     font-family: 'Poppins', sans-serif;
   }
   body {
-    @apply bg-slate-100 h-[100dvh]
+    @apply bg-slate-100 h-[100dvh];
+    background: url('./assets/bg.jpg') repeat;
   }
 }
 @layer utilities {
   #root {
     height: 100%;
     overflow: auto;
-  }
-  .appContainer {
-    background: url('./assets/bg.jpg') repeat;
-    /* @apply bg-white */
   }
   .form-group {
     @apply relative mb-3;
